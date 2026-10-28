@@ -90,6 +90,9 @@
       display: flex;
     }
   </style>
+  <!-- Leaflet for Real Google Map Styling -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body class="dark selection:bg-primary selection:text-primary-foreground">
 
@@ -106,7 +109,7 @@
         </div>
       </div>
       <div class="flex items-center gap-2.5 shrink-0">
-        <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order" target="_blank" rel="noopener noreferrer" class="px-5 py-2 red-gradient text-white rounded-full font-semibold text-xs sm:text-sm hover:opacity-90 shadow-lg shadow-primary/25 transition-all">
+        <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order" target="_blank" rel="noopener noreferrer" class="px-5 py-2 red-gradient text-white rounded-full font-semibold text-xs sm:text-sm hover:opacity-90 shadow-lg shadow-primary/25 transition-all">
           <i class="fa-brands fa-whatsapp mr-1"></i> Order Now
         </a>
         <button onclick="document.getElementById('promoBar').style.display='none'" class="p-2 text-muted-foreground hover:text-foreground transition-colors" aria-label="Close">
@@ -149,7 +152,7 @@
               <i class="fa-solid fa-phone text-accent text-xs"></i>
               <span>7503753074</span>
             </a>
-            <a href="https://wa.me/917503753074 • text=Hi%20Quick%20Eat%20Caf%C3%A9%2C%20I%20want%20to%20order" target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full red-gradient text-white text-xs sm:text-sm font-semibold shadow-lg shadow-primary/20 hover:opacity-90 transition-all">
+            <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%20Caf%C3%A9%2C%20I%20want%20to%20order" target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full red-gradient text-white text-xs sm:text-sm font-semibold shadow-lg shadow-primary/20 hover:opacity-90 transition-all">
               <i class="fa-brands fa-whatsapp text-sm"></i>
               <span>Order on WhatsApp</span>
             </a>
@@ -194,7 +197,7 @@
                 <span>View Full Menu</span>
                 <i class="fa-solid fa-arrow-right text-xs transition-transform duration-300 group-hover:translate-x-1"></i>
               </a>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20please%20send%20me%20today's%20menu" target="_blank" rel="noopener noreferrer" class="hidden sm:flex px-6 py-3.5 rounded-full border border-border text-foreground font-semibold text-sm sm:text-base items-center justify-center gap-2 transition-colors duration-300 hover:bg-secondary">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20please%20send%20me%20today's%20menu" target="_blank" rel="noopener noreferrer" class="hidden sm:flex px-6 py-3.5 rounded-full border border-border text-foreground font-semibold text-sm sm:text-base items-center justify-center gap-2 transition-colors duration-300 hover:bg-secondary">
                 <i class="fa-brands fa-whatsapp text-accent"></i>
                 <span>Order on WhatsApp</span>
               </a>
@@ -295,66 +298,6 @@
         <!-- Menu Grid with REAL Dish Photos (1Mysa Style Cards) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6" id="menuGrid">
 
-          <!-- 1: Chicken Roll -->
-          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="rolls">
-            <div>
-              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
-                <img src="images/dishes/roll-chicken.jpg" alt="Chicken Roll" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
-                <div class="absolute top-3 left-3 flex gap-2 z-10">
-                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
-                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
-                  </span>
-                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30">Bestseller</span>
-                </div>
-              </div>
-              <div class="p-5">
-                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Chicken Roll</h3>
-                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Juicy marinated chicken chunks wrapped in hot flaky paratha with secret sauces &amp; fresh onions.</p>
-              </div>
-            </div>
-            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
-              <div class="flex items-baseline gap-2">
-                <span class="text-xs text-muted-foreground">Single: <strong class="text-foreground text-sm">₹80</strong></span>
-                <span class="text-border">|</span>
-                <span class="text-xs text-muted-foreground">Double: <strong class="text-accent text-base font-bold">₹100</strong></span>
-              </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Chicken%20Roll" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
-                <i class="fa-brands fa-whatsapp"></i> Order
-              </a>
-            </div>
-          </div>
-
-          <!-- 2: Chicken Tikka Roll -->
-          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="rolls" data-featured="true">
-            <div>
-              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
-                <img src="images/dishes/roll-tandoori.jpg" alt="Chicken Tikka Roll" data-is-featured class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
-                <div class="absolute top-3 left-3 flex gap-2 z-10">
-                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
-                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
-                  </span>
-                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-amber-400 backdrop-blur-md border border-amber-400/30"><i class="fa-solid fa-fire"></i> Smoky</span>
-                </div>
-              </div>
-              <div class="p-5">
-                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Chicken Tikka Roll</h3>
-                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Smoky charcoal-grilled chicken tikka with spiced mint chutney and pickled onions.</p>
-              </div>
-            </div>
-            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
-              <div class="flex items-baseline gap-2">
-                <span class="text-xs text-muted-foreground">Single: <strong class="text-foreground text-sm">₹80</strong></span>
-                <span class="text-border">|</span>
-                <span class="text-xs text-muted-foreground">Double: <strong class="text-accent text-base font-bold">₹100</strong></span>
-              </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Chicken%20Tikka%20Roll" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
-                <i class="fa-brands fa-whatsapp"></i> Order
-              </a>
-            </div>
-          </div>
-
           <!-- 3: Malai Tikka Roll -->
           <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="rolls">
             <div>
@@ -379,14 +322,14 @@
                 <span class="text-border">|</span>
                 <span class="text-xs text-muted-foreground">Double: <strong class="text-accent text-base font-bold">₹100</strong></span>
               </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Malai%20Tikka%20Roll" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Malai%20Tikka%20Roll" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
                 <i class="fa-brands fa-whatsapp"></i> Order
               </a>
             </div>
           </div>
 
           <!-- 4: Quick Eat Special Mix Roll -->
-          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="rolls">
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="rolls" data-featured="true">
             <div>
               <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
                 <img src="images/dishes/roll-chicken.jpg" alt="Quick Eat Special Mix Roll" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
@@ -409,7 +352,7 @@
                 <span class="text-border">|</span>
                 <span class="text-xs text-muted-foreground">Double: <strong class="text-accent text-base font-bold">₹110</strong></span>
               </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Quick%20Eat%20Special%20Mix%20Roll" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Quick%20Eat%20Special%20Mix%20Roll" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
                 <i class="fa-brands fa-whatsapp"></i> Order
               </a>
             </div>
@@ -439,7 +382,7 @@
                 <span class="text-border">|</span>
                 <span class="text-xs text-muted-foreground">Double: <strong class="text-accent text-base font-bold">₹80</strong></span>
               </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Paneer%20Roll" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Paneer%20Roll" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
                 <i class="fa-brands fa-whatsapp"></i> Order
               </a>
             </div>
@@ -469,7 +412,7 @@
                 <span class="text-border">|</span>
                 <span class="text-xs text-muted-foreground">Full: <strong class="text-accent text-base font-bold">₹150</strong></span>
               </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Tandoori%20Momos" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Tandoori%20Momos" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
                 <i class="fa-brands fa-whatsapp"></i> Order
               </a>
             </div>
@@ -499,7 +442,7 @@
                 <span class="text-border">|</span>
                 <span class="text-xs text-muted-foreground">Full: <strong class="text-accent text-base font-bold">₹200</strong></span>
               </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Kurkure%20Momos" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Kurkure%20Momos" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
                 <i class="fa-brands fa-whatsapp"></i> Order
               </a>
             </div>
@@ -529,7 +472,7 @@
                 <span class="text-border">|</span>
                 <span class="text-xs text-muted-foreground">Full: <strong class="text-accent text-base font-bold">₹120</strong></span>
               </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Steamed%20Chicken%20Momos" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Steamed%20Chicken%20Momos" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
                 <i class="fa-brands fa-whatsapp"></i> Order
               </a>
             </div>
@@ -559,7 +502,7 @@
                 <span class="text-border">|</span>
                 <span class="text-xs text-muted-foreground">Full: <strong class="text-accent text-base font-bold">₹450</strong></span>
               </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Tandoori%20Chicken" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Tandoori%20Chicken" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
                 <i class="fa-brands fa-whatsapp"></i> Order
               </a>
             </div>
@@ -589,7 +532,7 @@
                 <span class="text-border">|</span>
                 <span class="text-xs text-muted-foreground">Full: <strong class="text-accent text-base font-bold">₹480</strong></span>
               </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Butter%20Chicken" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Butter%20Chicken" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
                 <i class="fa-brands fa-whatsapp"></i> Order
               </a>
             </div>
@@ -619,7 +562,7 @@
                 <span class="text-border">|</span>
                 <span class="text-xs text-muted-foreground">Full: <strong class="text-accent text-base font-bold">₹180</strong></span>
               </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Chicken%20Hakka%20Noodles" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Chicken%20Hakka%20Noodles" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
                 <i class="fa-brands fa-whatsapp"></i> Order
               </a>
             </div>
@@ -647,7 +590,7 @@
               <div class="flex items-baseline gap-2">
                 <span class="text-xs text-muted-foreground">Special Combo: <strong class="text-accent text-base font-bold">₹200</strong></span>
               </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Combo%201%20Popcorn%20Fries%20Coldrink" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Combo%201%20Popcorn%20Fries%20Coldrink" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
                 <i class="fa-brands fa-whatsapp"></i> Order
               </a>
             </div>
@@ -675,7 +618,7 @@
               <div class="flex items-baseline gap-2">
                 <span class="text-xs text-muted-foreground">Price: <strong class="text-accent text-base font-bold">₹80</strong></span>
               </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Peri%20Peri%20Fries" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Peri%20Peri%20Fries" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
                 <i class="fa-brands fa-whatsapp"></i> Order
               </a>
             </div>
@@ -703,7 +646,7 @@
               <div class="flex items-baseline gap-2">
                 <span class="text-xs text-muted-foreground">Price: <strong class="text-accent text-base font-bold">₹130</strong></span>
               </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Cheesy%20Fries" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Cheesy%20Fries" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
                 <i class="fa-brands fa-whatsapp"></i> Order
               </a>
             </div>
@@ -731,7 +674,7 @@
               <div class="flex items-baseline gap-2">
                 <span class="text-xs text-muted-foreground">Price: <strong class="text-accent text-base font-bold">₹140</strong></span>
               </div>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Chicken%20Maggie" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+              <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Chicken%20Maggie" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
                 <i class="fa-brands fa-whatsapp"></i> Order
               </a>
             </div>
@@ -1067,19 +1010,11 @@
           </div>
         </div>
 
-        <!-- Map Container (Clean & 100% Reliable without 404) -->
+        <!-- Map Container with Authentic Google Maps Colors -->
         <div class="rounded-3xl overflow-hidden border border-border shadow-2xl h-96 relative bg-secondary">
-          <iframe 
-            src="https://www.openstreetmap.org/export/embed.html?bbox=77.275,28.555,77.295,28.570&layer=mapnik&marker=28.5628,77.2847" 
-            width="100%" 
-            height="100%" 
-            style="border:0;" 
-            allowfullscreen="" 
-            loading="lazy" 
-            title="Quick Eat Café Map Location">
-          </iframe>
+          <div id="quickEatMap" class="w-full h-full z-0"></div>
           <div class="absolute bottom-4 right-4 z-10 flex flex-wrap gap-2">
-            <a href="https://www.google.com/maps/search/ • api=1&query=Shop+142,+Zakir+Nagar+Main+Road,+Jogabai+Extension,+Okhla,+New+Delhi+110025" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-full bg-card/95 border border-border text-foreground hover:bg-primary hover:text-white text-xs font-bold shadow-xl backdrop-blur-md flex items-center gap-2 transition-all">
+            <a href="https://www.google.com/maps/search/?api=1&query=Shop+142,+Zakir+Nagar+Main+Road,+Jogabai+Extension,+Okhla,+New+Delhi+110025" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-full bg-card/95 border border-border text-foreground hover:bg-primary hover:text-white text-xs font-bold shadow-xl backdrop-blur-md flex items-center gap-2 transition-all">
               <i class="fa-solid fa-diamond-turn-right text-accent"></i>
               <span>Open in Google Maps App</span>
             </a>
@@ -1107,7 +1042,7 @@
           <a href="https://instagram.com/Quick.Eat" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-secondary border border-border flex items-center justify-center text-accent hover:bg-accent hover:text-black transition-all">
             <i class="fa-brands fa-instagram"></i>
           </a>
-          <a href="https://wa.me/917503753074" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-secondary border border-border flex items-center justify-center text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all">
+          <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-secondary border border-border flex items-center justify-center text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all">
             <i class="fa-brands fa-whatsapp"></i>
           </a>
           <a href="tel:+917503753074" class="w-10 h-10 rounded-full bg-secondary border border-border flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all">
@@ -1123,7 +1058,7 @@
 
     <!-- Floating WhatsApp Button -->
     <div class="fixed bottom-6 right-6 z-40">
-      <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20I%20would%20like%20to%20order" target="_blank" rel="noopener noreferrer" class="w-14 h-14 rounded-full bg-[#25d366] text-white flex items-center justify-center text-2xl shadow-[0_10px_25px_rgba(37,211,102,0.5)] hover:scale-110 transition-transform" title="Order on WhatsApp">
+      <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20would%20like%20to%20order" target="_blank" rel="noopener noreferrer" class="w-14 h-14 rounded-full bg-[#25d366] text-white flex items-center justify-center text-2xl shadow-[0_10px_25px_rgba(37,211,102,0.5)] hover:scale-110 transition-transform" title="Order on WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
       </a>
     </div>
@@ -1136,29 +1071,32 @@
       </div>
     </div>
     <!-- Mobile Navigation Drawer Overlay (Mobile Only) -->
-    <div id="mobileMenuOverlay" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md transition-opacity duration-300 opacity-0 pointer-events-none sm:hidden" onclick="toggleMobileMenu()">
-      <div id="mobileMenuDrawer" class="fixed top-0 right-0 bottom-0 w-[280px] bg-card border-l border-border p-6 flex flex-col justify-between shadow-2xl transition-transform duration-300 translate-x-full" onclick="event.stopPropagation()">
+    <div id="mobileMenuOverlay" style="display: none;" class="fixed inset-0 z-[999] bg-black/85 backdrop-blur-md transition-opacity duration-300 sm:hidden" onclick="toggleMobileMenu()">
+      <div id="mobileMenuDrawer" style="transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);" class="fixed top-0 right-0 bottom-0 w-[290px] bg-card border-l border-border p-6 flex flex-col justify-between shadow-2xl" onclick="event.stopPropagation()">
         <div>
           <!-- Header of Drawer -->
-          <div class="flex items-center justify-between pb-5 border-b border-border/60 mb-6">
+          <div class="flex items-center justify-between pb-4 border-b border-border/60 mb-5">
             <div class="flex items-center gap-2.5">
-              <div class="w-9 h-9 rounded-full p-1 bg-white border border-border shadow-sm flex items-center justify-center">
+              <div class="w-10 h-10 rounded-full p-1 bg-white border border-border shadow-sm flex items-center justify-center">
                 <img src="images/logo.png" alt="Quick Eat Logo" class="w-full h-full object-contain">
               </div>
-              <span class="font-heading font-bold text-lg text-foreground">QUICK EAT</span>
+              <div>
+                <span class="font-heading font-bold text-lg text-foreground block">QUICK EAT</span>
+                <span class="text-[10px] text-accent font-semibold tracking-wider uppercase">Zakir Nagar</span>
+              </div>
             </div>
-            <button onclick="toggleMobileMenu()" class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground" aria-label="Close menu">
-              <i class="fa-solid fa-xmark"></i>
+            <button type="button" onclick="toggleMobileMenu()" class="w-9 h-9 rounded-full bg-secondary hover:bg-secondary/80 flex items-center justify-center text-foreground cursor-pointer" aria-label="Close menu">
+              <i class="fa-solid fa-xmark text-base"></i>
             </button>
           </div>
 
           <!-- Nav Links -->
-          <nav class="flex flex-col gap-2">
+          <nav class="flex flex-col gap-1.5">
             <a href="#home" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-all">
               <i class="fa-solid fa-house text-accent w-5 text-center"></i> Home
             </a>
-            <a href="#menu" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-all">
-              <i class="fa-solid fa-utensils text-accent w-5 text-center"></i> Menu
+            <a href="menu.html" target="_blank" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-all">
+              <i class="fa-solid fa-utensils text-accent w-5 text-center"></i> View Full Menu Page
             </a>
             <a href="#cards" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-all">
               <i class="fa-solid fa-book-open text-accent w-5 text-center"></i> Menu Cards
@@ -1176,11 +1114,11 @@
         </div>
 
         <!-- Footer of Drawer -->
-        <div class="pt-6 border-t border-border/60 flex flex-col gap-3">
+        <div class="pt-5 border-t border-border/60 flex flex-col gap-2.5">
           <a href="tel:+917503753074" class="flex items-center justify-center gap-2 py-3 rounded-xl border border-border text-foreground text-sm font-semibold hover:bg-secondary">
             <i class="fa-solid fa-phone text-accent"></i> Call 7503753074
           </a>
-          <a href="https://wa.me/917503753074 • text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 py-3 rounded-xl red-gradient text-white text-sm font-semibold shadow-lg shadow-primary/20">
+          <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 py-3 rounded-xl red-gradient text-white text-sm font-semibold shadow-lg shadow-primary/25">
             <i class="fa-brands fa-whatsapp text-lg"></i> Order on WhatsApp
           </a>
         </div>
@@ -1189,19 +1127,63 @@
   </main>
 
   <script>
-    // Audio Toggle for Video
+    // Audio Toggle for Hero Reel
     function toggleReelAudio(e) {
-      if (e) e.stopPropagation();
+      if (e) { e.preventDefault(); e.stopPropagation(); }
       const vid = document.getElementById('heroReelVideo');
       const icon = document.getElementById('audioToggleIcon');
-      if (vid) {
-        vid.muted = !vid.muted;
-        if (vid.muted) {
-          icon.className = 'fa-solid fa-volume-xmark text-sm';
-        } else {
-          icon.className = 'fa-solid fa-volume-high text-sm text-accent';
-          vid.play();
-        }
+      if (!vid) return;
+
+      vid.defaultMuted = false;
+      vid.muted = !vid.muted;
+      if (!vid.muted) {
+        vid.volume = 1.0;
+        vid.play().catch(() => {});
+        if (icon) icon.className = 'fa-solid fa-volume-high text-sm text-accent';
+      } else {
+        if (icon) icon.className = 'fa-solid fa-volume-xmark text-sm';
+      }
+    }
+
+    // Audio Toggle for Story Reel
+    function toggleStoryReelAudio(e) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      const vid = document.getElementById('storyReelVideo');
+      const icon = document.getElementById('storyAudioIcon');
+      const text = document.getElementById('storyAudioText');
+      if (!vid) return;
+
+      vid.defaultMuted = false;
+      vid.muted = !vid.muted;
+      if (!vid.muted) {
+        vid.volume = 1.0;
+        vid.play().catch(() => {});
+        if (icon) icon.className = 'fa-solid fa-volume-high text-sm text-accent transition-transform group-hover:scale-110';
+        if (text) text.textContent = 'Sound: ON';
+      } else {
+        if (icon) icon.className = 'fa-solid fa-volume-xmark text-sm transition-transform group-hover:scale-110';
+        if (text) text.textContent = 'Sound: Muted';
+      }
+    }
+
+    // Mobile Navigation Drawer Toggle (100% Reliable Inline Style Animation)
+    function toggleMobileMenu() {
+      const overlay = document.getElementById('mobileMenuOverlay');
+      const drawer = document.getElementById('mobileMenuDrawer');
+      if (!overlay || !drawer) return;
+      const isClosed = overlay.style.display === 'none' || overlay.style.display === '';
+      if (isClosed) {
+        overlay.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => {
+          drawer.style.transform = 'translateX(0)';
+        });
+      } else {
+        drawer.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          overlay.style.display = 'none';
+          document.body.style.overflow = '';
+        }, 250);
       }
     }
 
@@ -1216,12 +1198,12 @@
         const isFeatured = card.getAttribute('data-featured') === 'true';
         if (cat === 'all') {
           if (isMobile && !showAllOnMobile) {
-            card.style.display = isFeatured  •  'flex' : 'none';
+            card.style.display = isFeatured ? 'flex' : 'none';
           } else {
             card.style.display = 'flex';
           }
         } else {
-          card.style.display = (itemCat === cat)  •  'flex' : 'none';
+          card.style.display = (itemCat === cat) ? 'flex' : 'none';
         }
       });
 
@@ -1253,9 +1235,33 @@
       updateMenuDisplay('all');
     }
 
-    window.addEventListener('DOMContentLoaded', () => updateMenuDisplay('all'));
+    window.addEventListener('DOMContentLoaded', () => {
+      updateMenuDisplay('all');
+      initGoogleStyleMap();
+    });
     window.addEventListener('resize', () => updateMenuDisplay('all'));
     updateMenuDisplay('all');
+
+    // Initialize Leaflet Map with Authentic Google Maps Road Tiles
+    function initGoogleStyleMap() {
+      if (typeof L === 'undefined') return;
+      const mapElem = document.getElementById('quickEatMap');
+      if (!mapElem) return;
+
+      const map = L.map('quickEatMap', {
+        scrollWheelZoom: false
+      }).setView([28.5638, 77.2848], 16);
+
+      // Official Google Maps Standard Road Tiles
+      L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        attribution: '© Google Maps'
+      }).addTo(map);
+
+      // Custom Red Google Style Marker
+      const marker = L.marker([28.5638, 77.2848]).addTo(map);
+      marker.bindPopup('<div style="color:#111; font-family:sans-serif; text-align:center;"><strong style="color:#e62828; font-size:14px;">Quick Eat Café</strong><br><span style="font-size:12px;">Shop 142, Zakir Nagar Main Road, Okhla</span></div>').openPopup();
+    }
 
     // Modal Zoom
     function openMenuModal(src) {
@@ -1270,47 +1276,6 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeMenuModal();
     });
-
-    // Story Reel Audio Management
-    const storyVid = document.getElementById('storyReelVideo');
-    const storyIcon = document.getElementById('storyAudioIcon');
-    const storyText = document.getElementById('storyAudioText');
-
-    function toggleStoryReelAudio(e) {
-      if (e) e.stopPropagation();
-      if (!storyVid) return;
-      if (storyVid.muted) {
-        storyVid.muted = false;
-        storyVid.play().catch(() => {});
-        if (storyIcon) storyIcon.className = 'fa-solid fa-volume-high text-sm text-accent transition-transform group-hover:scale-110';
-        if (storyText) storyText.textContent = 'Sound: ON';
-      } else {
-        storyVid.muted = true;
-        if (storyIcon) storyIcon.className = 'fa-solid fa-volume-xmark text-sm transition-transform group-hover:scale-110';
-        if (storyText) storyText.textContent = 'Sound: Muted';
-      }
-    }
-
-    // Mobile Drawer Toggle
-    function toggleMobileMenu() {
-      const overlay = document.getElementById('mobileMenuOverlay');
-      const drawer = document.getElementById('mobileMenuDrawer');
-      if (!overlay || !drawer) return;
-      const isOpen = !overlay.classList.contains('pointer-events-none');
-      if (isOpen) {
-        overlay.classList.add('opacity-0', 'pointer-events-none');
-        overlay.classList.remove('opacity-100');
-        drawer.classList.add('translate-x-full');
-        drawer.classList.remove('translate-x-0');
-        document.body.style.overflow = '';
-      } else {
-        overlay.classList.remove('opacity-0', 'pointer-events-none');
-        overlay.classList.add('opacity-100');
-        drawer.classList.remove('translate-x-full');
-        drawer.classList.add('translate-x-0');
-        document.body.style.overflow = 'hidden';
-      }
-    }
   </script>
 </body>
 </html>
