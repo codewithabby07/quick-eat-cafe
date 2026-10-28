@@ -126,7 +126,7 @@
               <span class="text-lg sm:text-xl font-heading font-bold text-foreground tracking-tight block">
                 QUICK EAT <span class="font-script text-accent text-2xl font-normal lowercase">café</span>
               </span>
-              <p class="text-[11px] text-muted-foreground tracking-wider uppercase">Zakir Nagar • Okhla</p>
+              
             </div>
           </a>
 
@@ -146,7 +146,7 @@
               <i class="fa-solid fa-phone text-accent text-xs"></i>
               <span>7503753074</span>
             </a>
-            <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%20Caf%C3%A9%2C%20I%20want%20to%20order" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-full red-gradient text-white text-xs sm:text-sm font-semibold shadow-lg shadow-primary/20 hover:opacity-90 transition-all">
+            <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%20Caf%C3%A9%2C%20I%20want%20to%20order" target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full red-gradient text-white text-xs sm:text-sm font-semibold shadow-lg shadow-primary/20 hover:opacity-90 transition-all">
               <i class="fa-brands fa-whatsapp text-sm"></i>
               <span>Order on WhatsApp</span>
             </a>
@@ -185,7 +185,7 @@
                 <span>View Full Menu</span>
                 <i class="fa-solid fa-arrow-right text-xs transition-transform duration-300 group-hover:translate-x-1"></i>
               </a>
-              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20please%20send%20me%20today's%20menu" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 rounded-full border border-border text-foreground font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-colors duration-300 hover:bg-secondary">
+              <a href="https://wa.me/917503753074•text=Hi%20Quick%20Eat%2C%20please%20send%20me%20today's%20menu" target="_blank" rel="noopener noreferrer" class="hidden sm:flex px-6 py-3.5 rounded-full border border-border text-foreground font-semibold text-sm sm:text-base items-center justify-center gap-2 transition-colors duration-300 hover:bg-secondary">
                 <i class="fa-brands fa-whatsapp text-accent"></i>
                 <span>Order on WhatsApp</span>
               </a>
@@ -317,10 +317,10 @@
           </div>
 
           <!-- 2: Chicken Tikka Roll -->
-          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="rolls">
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="rolls" data-featured="true">
             <div>
               <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
-                <img src="images/dishes/roll-tandoori.jpg" alt="Chicken Tikka Roll" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <img src="images/dishes/roll-tandoori.jpg" alt="Chicken Tikka Roll" data-is-featured class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
                 <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
                 <div class="absolute top-3 left-3 flex gap-2 z-10">
                   <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
@@ -467,7 +467,7 @@
           </div>
 
           <!-- 7: Kurkure Momos -->
-          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="momos">
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="momos" data-featured="true">
             <div>
               <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
                 <img src="images/dishes/momos-kurkure.jpg" alt="Kurkure Momos" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
@@ -527,7 +527,7 @@
           </div>
 
           <!-- 9: Tandoori Chicken -->
-          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="main">
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="main" data-featured="true">
             <div>
               <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
                 <img src="images/dishes/real-tandoori-chicken.jpg" alt="Tandoori Chicken" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
@@ -587,7 +587,7 @@
           </div>
 
           <!-- 11: Chicken Hakka Noodles -->
-          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="noodles">
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="noodles" data-featured="true">
             <div>
               <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
                 <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246•w=600&auto=format&fit=crop&q=80" alt="Chicken Hakka Noodles" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
@@ -617,7 +617,7 @@
           </div>
 
           <!-- 12: Combo 1 (Popcorn + Fries + Cold Drink) -->
-          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="pasta">
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="pasta" data-featured="true">
             <div>
               <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
                 <img src="images/dishes/combo-popcorn-fries.jpg" alt="Popcorn Fries Combo" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
@@ -645,7 +645,7 @@
           </div>
 
           <!-- 13: Peri Peri Fries -->
-          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="fries">
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="fries" data-featured="true">
             <div>
               <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
                 <img src="images/dishes/fries-periperi.jpg" alt="Peri Peri Fries" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
@@ -701,7 +701,7 @@
           </div>
 
           <!-- 15: Chicken Maggie -->
-          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="fries">
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="fries" data-featured="true">
             <div>
               <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
                 <img src="images/dishes/chicken-maggie.png" alt="Chicken Maggie" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
@@ -1145,22 +1145,57 @@
       }
     }
 
-    // Category Filtering
+    // Category Filtering & Mobile Item Limit
+    let showAllOnMobile = false;
+
+    function updateMenuDisplay(cat) {
+      const isMobile = window.innerWidth < 640;
+      const items = document.querySelectorAll('.menu-item-card');
+      items.forEach(card => {
+        const itemCat = card.getAttribute('data-cat');
+        const isFeatured = card.getAttribute('data-featured') === 'true';
+        if (cat === 'all') {
+          if (isMobile && !showAllOnMobile) {
+            card.style.display = isFeatured ? 'flex' : 'none';
+          } else {
+            card.style.display = 'flex';
+          }
+        } else {
+          card.style.display = (itemCat === cat) ? 'flex' : 'none';
+        }
+      });
+
+      const viewAllContainer = document.getElementById('viewAllMobileContainer');
+      if (viewAllContainer) {
+        if (cat === 'all' && isMobile && !showAllOnMobile) {
+          viewAllContainer.style.display = 'block';
+        } else {
+          viewAllContainer.style.display = 'none';
+        }
+      }
+    }
+
     function filterCategory(cat, btn) {
       document.querySelectorAll('.menu-tab-btn').forEach(b => {
         b.className = 'menu-tab-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm font-semibold transition-all duration-300 bg-card text-foreground hover:bg-primary/10 border border-border';
       });
-      btn.className = 'menu-tab-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm font-semibold transition-all duration-300 bg-primary text-white shadow-lg shadow-primary/20';
-
-      const items = document.querySelectorAll('.menu-item-card');
-      items.forEach(card => {
-        if (cat === 'all' || card.getAttribute('data-cat') === cat) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+      if (btn) {
+        btn.className = 'menu-tab-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm font-semibold transition-all duration-300 bg-primary text-white shadow-lg shadow-primary/20';
+      }
+      if (cat === 'all' && btn) {
+        showAllOnMobile = true;
+      }
+      updateMenuDisplay(cat);
     }
+
+    function showAllMobileItems() {
+      showAllOnMobile = true;
+      updateMenuDisplay('all');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => updateMenuDisplay('all'));
+    window.addEventListener('resize', () => updateMenuDisplay('all'));
+    updateMenuDisplay('all');
 
     // Modal Zoom
     function openMenuModal(src) {
