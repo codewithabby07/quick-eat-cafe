@@ -189,7 +189,7 @@
                 <i class="fa-brands fa-whatsapp text-accent"></i>
                 <span>Order on WhatsApp</span>
               </a>
-              <a href="https://www.zomato.com" target="_blank" rel="noopener noreferrer" class="px-5 py-3.5 rounded-full border border-red-500/40 text-red-400 font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-colors duration-300 hover:bg-red-500/10">
+              <a href="https://www.zomato.com" target="_blank" rel="noopener noreferrer" class="mt-2 sm:mt-0 px-5 py-3.5 rounded-full border border-red-500/40 text-red-400 font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-colors duration-300 hover:bg-red-500/10">
                 <i class="fa-solid fa-utensils"></i>
                 <span>Zomato</span>
               </a>
@@ -1126,6 +1126,57 @@
         <img id="modalImg" src="" alt="Menu Zoom" class="max-w-full max-h-[85vh] rounded-2xl border border-border shadow-2xl">
       </div>
     </div>
+    <!-- Mobile Navigation Drawer Overlay (Mobile Only) -->
+    <div id="mobileMenuOverlay" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md transition-opacity duration-300 opacity-0 pointer-events-none sm:hidden" onclick="toggleMobileMenu()">
+      <div id="mobileMenuDrawer" class="fixed top-0 right-0 bottom-0 w-[280px] bg-card border-l border-border p-6 flex flex-col justify-between shadow-2xl transition-transform duration-300 translate-x-full" onclick="event.stopPropagation()">
+        <div>
+          <!-- Header of Drawer -->
+          <div class="flex items-center justify-between pb-5 border-b border-border/60 mb-6">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-full p-1 bg-white border border-border shadow-sm flex items-center justify-center">
+                <img src="images/logo.png" alt="Quick Eat Logo" class="w-full h-full object-contain">
+              </div>
+              <span class="font-heading font-bold text-lg text-foreground">QUICK EAT</span>
+            </div>
+            <button onclick="toggleMobileMenu()" class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground" aria-label="Close menu">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <!-- Nav Links -->
+          <nav class="flex flex-col gap-2">
+            <a href="#home" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-all">
+              <i class="fa-solid fa-house text-accent w-5 text-center"></i> Home
+            </a>
+            <a href="#menu" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-all">
+              <i class="fa-solid fa-utensils text-accent w-5 text-center"></i> Menu
+            </a>
+            <a href="#cards" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-all">
+              <i class="fa-solid fa-book-open text-accent w-5 text-center"></i> Menu Cards
+            </a>
+            <a href="#story" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-all">
+              <i class="fa-solid fa-video text-accent w-5 text-center"></i> Our Story
+            </a>
+            <a href="#reviews" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-all">
+              <i class="fa-solid fa-star text-accent w-5 text-center"></i> Reviews
+            </a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-all">
+              <i class="fa-solid fa-location-dot text-accent w-5 text-center"></i> Visit Us
+            </a>
+          </nav>
+        </div>
+
+        <!-- Footer of Drawer -->
+        <div class="pt-6 border-t border-border/60 flex flex-col gap-3">
+          <a href="tel:+917503753074" class="flex items-center justify-center gap-2 py-3 rounded-xl border border-border text-foreground text-sm font-semibold hover:bg-secondary">
+            <i class="fa-solid fa-phone text-accent"></i> Call 7503753074
+          </a>
+          <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 py-3 rounded-xl red-gradient text-white text-sm font-semibold shadow-lg shadow-primary/20">
+            <i class="fa-brands fa-whatsapp text-lg"></i> Order on WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
   </main>
 
   <script>
@@ -1228,6 +1279,27 @@
         storyVid.muted = true;
         if (storyIcon) storyIcon.className = 'fa-solid fa-volume-xmark text-sm transition-transform group-hover:scale-110';
         if (storyText) storyText.textContent = 'Sound: Muted';
+      }
+    }
+
+    // Mobile Drawer Toggle
+    function toggleMobileMenu() {
+      const overlay = document.getElementById('mobileMenuOverlay');
+      const drawer = document.getElementById('mobileMenuDrawer');
+      if (!overlay || !drawer) return;
+      const isOpen = !overlay.classList.contains('pointer-events-none');
+      if (isOpen) {
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        overlay.classList.remove('opacity-100');
+        drawer.classList.add('translate-x-full');
+        drawer.classList.remove('translate-x-0');
+        document.body.style.overflow = '';
+      } else {
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+        overlay.classList.add('opacity-100');
+        drawer.classList.remove('translate-x-full');
+        drawer.classList.add('translate-x-0');
+        document.body.style.overflow = 'hidden';
       }
     }
   </script>
