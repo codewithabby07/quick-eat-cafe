@@ -1,0 +1,1116 @@
+const fs = require('fs');
+
+const htmlContent = `<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Eat Café | Best Rolls, Momos & Indo-Chinese in Zakir Nagar, Okhla</title>
+  <meta name="description" content="Discover authentic Chicken Rolls, Momos, Indo-Chinese, Pasta and Tandoori at Quick Eat Café, Zakir Nagar Main Road, Okhla. Call +91 7503753074 or order on WhatsApp!">
+  <meta name="keywords" content="Quick Eat, Quick Eat Cafe, Quick Eat Zakir Nagar, Best Rolls in Zakir Nagar, Chicken Roll Okhla, Momos Zakir Nagar, Fast Food Jamia, Street Food Okhla">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="restaurant">
+  <meta property="og:title" content="Quick Eat Café - Best Rolls & Fast Food in Zakir Nagar, Okhla">
+  <meta property="og:description" content="Authentic Chicken Rolls, Sizzling Momos, Fried Rice & Combos. Open 1:00 PM - 11:00 PM. Call +91 7503753074!">
+  <meta property="og:image" content="images/dishes/roll-chicken.jpg">
+
+  <!-- Google Fonts: DM Serif Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS Compiled Bundle from Reference Site -->
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    :root {
+      --background: 224 18% 7%;
+      --foreground: 0 0% 98%;
+      --card: 224 16% 10%;
+      --card-foreground: 0 0% 98%;
+      --popover: 224 16% 10%;
+      --popover-foreground: 0 0% 98%;
+      --primary: 0 78% 54%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 224 14% 14%;
+      --secondary-foreground: 45 75% 55%;
+      --muted: 224 10% 18%;
+      --muted-foreground: 220 10% 65%;
+      --accent: 45 75% 52%;
+      --accent-foreground: 224 18% 7%;
+      --border: 224 12% 18%;
+      --radius: 1rem;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: hsl(var(--background));
+      color: hsl(var(--foreground));
+      overflow-x: hidden;
+    }
+
+    .font-heading {
+      font-family: 'DM Serif Display', serif;
+    }
+
+    .font-script {
+      font-family: 'Great Vibes', cursive;
+    }
+
+    .gold-text {
+      background: linear-gradient(135deg, #ffe785 0%, #ffd83d 30%, #e5b84a 70%, #b8861e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .red-gradient {
+      background: linear-gradient(135deg, #ff3b3b 0%, #e62828 60%, #b31414 100%);
+    }
+
+    /* Modal for Menu Zoom */
+    .menu-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.94);
+      backdrop-filter: blur(10px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .menu-modal.active {
+      display: flex;
+    }
+  </style>
+</head>
+<body class="dark selection:bg-primary selection:text-primary-foreground">
+
+  <!-- Promo Announcement Bar -->
+  <div id="promoBar" class="fixed bottom-6 left-4 right-4 z-50 md:left-12 md:right-12 transition-all duration-500">
+    <div class="bg-card/95 border border-border p-4 md:p-5 rounded-2xl shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4 backdrop-blur-md">
+      <div class="flex items-center gap-3.5">
+        <div class="p-2.5 bg-primary/10 rounded-full text-primary shrink-0">
+          <i class="fa-solid fa-fire text-lg"></i>
+        </div>
+        <div class="text-sm text-muted-foreground text-center md:text-left">
+          <p class="font-medium text-foreground">Welcome to Quick Eat Café, Zakir Nagar!</p>
+          <p class="text-xs">Serving piping-hot Rolls, Momos &amp; Chinese from 1:00 PM to 11:00 PM. Order direct on WhatsApp for express delivery!</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2.5 shrink-0">
+        <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order" target="_blank" rel="noopener noreferrer" class="px-5 py-2 red-gradient text-white rounded-full font-semibold text-xs sm:text-sm hover:opacity-90 shadow-lg shadow-primary/25 transition-all">
+          <i class="fa-brands fa-whatsapp mr-1"></i> Order Now
+        </a>
+        <button onclick="document.getElementById('promoBar').style.display='none'" class="p-2 text-muted-foreground hover:text-foreground transition-colors" aria-label="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main class="min-h-screen bg-background">
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-background/90 backdrop-blur-md border-b border-border/40">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 sm:h-20">
+          <a class="flex items-center gap-3 flex-shrink-0" href="#">
+            <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-accent/40 bg-accent/10 flex items-center justify-center text-accent text-lg shadow-sm">
+              <i class="fa-solid fa-crown"></i>
+            </div>
+            <div class="min-w-0">
+              <span class="text-lg sm:text-xl font-heading font-bold text-foreground tracking-tight block">
+                QUICK EAT <span class="font-script text-accent text-2xl font-normal lowercase">café</span>
+              </span>
+              <p class="text-[11px] text-muted-foreground tracking-wider uppercase">Zakir Nagar • Okhla</p>
+            </div>
+          </a>
+
+          <!-- Navigation Links -->
+          <div class="hidden lg:flex items-center gap-1.5">
+            <a class="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 text-foreground hover:bg-primary/10 hover:text-primary" href="#home">Home</a>
+            <a class="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 bg-primary/15 text-primary font-semibold" href="#menu">Menu</a>
+            <a class="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 text-foreground hover:bg-primary/10 hover:text-primary" href="#cards">Menu Cards</a>
+            <a class="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 text-foreground hover:bg-primary/10 hover:text-primary" href="#story">Our Story</a>
+            <a class="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 text-foreground hover:bg-primary/10 hover:text-primary" href="#reviews">Reviews</a>
+            <a class="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 text-foreground hover:bg-primary/10 hover:text-primary" href="#contact">Visit Us</a>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <a href="tel:+917503753074" class="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-lg border border-border text-foreground hover:bg-secondary transition-all text-sm font-medium">
+              <i class="fa-solid fa-phone text-accent text-xs"></i>
+              <span>7503753074</span>
+            </a>
+            <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%20Caf%C3%A9%2C%20I%20want%20to%20order" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-full red-gradient text-white text-xs sm:text-sm font-semibold shadow-lg shadow-primary/20 hover:opacity-90 transition-all">
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+              <span>Order on WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section (Clean Hero with ONLY Video Showcase) -->
+    <header id="home" class="relative overflow-hidden bg-background pt-24 pb-14 md:pt-36 md:pb-24">
+      <div class="pointer-events-none absolute -top-40 -left-32 hidden md:block w-[34rem] h-[34rem] rounded-full bg-primary/[0.08] blur-3xl"></div>
+      <div class="pointer-events-none absolute bottom-0 right-1/4 hidden md:block w-80 h-80 rounded-full bg-accent/[0.08] blur-3xl"></div>
+
+      <div class="container mx-auto px-5 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-16 items-center">
+          
+          <!-- Hero Text -->
+          <div class="text-center lg:text-left">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-accent/30 bg-accent/[0.08] mb-6">
+              <i class="fa-solid fa-star text-accent text-xs"></i>
+              <span class="text-sm font-semibold text-foreground">4.8</span>
+              <span class="text-border">|</span>
+              <span class="text-sm text-muted-foreground">500+ Happy Foodies in Zakir Nagar</span>
+            </div>
+
+            <h1 class="font-heading text-4xl sm:text-6xl lg:text-7xl text-foreground mb-5 leading-[1.08]">
+              Crispy <span class="italic text-primary">Rolls</span>, Sizzling Momos &amp; Delights
+            </h1>
+
+            <p class="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+              From our loaded Chicken Tikka &amp; Malai Rolls to tandoori roasted momos and wok-tossed noodles — freshly prepared every day at Quick Eat Café, Zakir Nagar Main Road.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3.5 mb-9">
+              <a href="#menu" class="group px-7 py-3.5 rounded-full red-gradient text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-[0_10px_30px_-10px_rgba(230,40,40,0.6)] transition-all duration-300 hover:-translate-y-0.5">
+                <span>View Full Menu</span>
+                <i class="fa-solid fa-arrow-right text-xs transition-transform duration-300 group-hover:translate-x-1"></i>
+              </a>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20please%20send%20me%20today's%20menu" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 rounded-full border border-border text-foreground font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-colors duration-300 hover:bg-secondary">
+                <i class="fa-brands fa-whatsapp text-accent"></i>
+                <span>Order on WhatsApp</span>
+              </a>
+              <a href="https://www.zomato.com" target="_blank" rel="noopener noreferrer" class="px-5 py-3.5 rounded-full border border-red-500/40 text-red-400 font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-colors duration-300 hover:bg-red-500/10">
+                <i class="fa-solid fa-utensils"></i>
+                <span>Zomato</span>
+              </a>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2.5 text-sm text-muted-foreground">
+              <span class="inline-flex items-center gap-2"><i class="fa-solid fa-utensils text-accent"></i> Dine-in</span>
+              <span class="inline-flex items-center gap-2"><i class="fa-solid fa-motorcycle text-accent"></i> Express Delivery</span>
+              <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bag-shopping text-accent"></i> Takeaway</span>
+              <a href="#contact" class="inline-flex items-center gap-2 transition-colors hover:text-foreground">
+                <i class="fa-solid fa-map-pin text-accent"></i> Zakir Nagar Main Road
+              </a>
+            </div>
+          </div>
+
+          <!-- Hero Video Showcase (ONLY Video, No Other Photos) -->
+          <div class="relative">
+            <div class="relative aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-[1.75rem] overflow-hidden bg-secondary shadow-[0_40px_70px_-30px_rgba(230,40,40,0.35)] border border-border">
+              
+              <!-- Pure Video Container -->
+              <video id="heroReelVideo" class="w-full h-full object-cover" autoplay muted loop playsinline poster="images/reel-thumb.jpg">
+                <source src="images/reel-video.mp4" type="video/mp4">
+              </video>
+              
+              <!-- Subtle overlay for aesthetic & readability -->
+              <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-black/20 pointer-events-none"></div>
+              
+              <!-- Bottom caption -->
+              <div class="absolute bottom-6 left-6 right-6 pointer-events-none">
+                <span class="px-2.5 py-1 rounded-md bg-accent text-black text-[11px] font-bold uppercase tracking-wider mb-1.5 inline-flex items-center gap-1.5">
+                  <i class="fa-solid fa-shop"></i> Dine-In Ambience
+                </span>
+                <h3 class="font-heading text-2xl text-foreground font-bold">Your New Hangout is Here</h3>
+                <p class="text-xs text-accent font-medium mt-0.5">Come Dine In • Shop 142, Zakir Nagar Main Road</p>
+              </div>
+
+              <!-- Audio Toggle Button -->
+              <button type="button" onclick="toggleReelAudio(event)" class="absolute top-4 right-4 z-30 w-10 h-10 rounded-full bg-black/60 text-white hover:text-accent hover:bg-black/90 flex items-center justify-center backdrop-blur-md transition-all shadow-lg border border-white/10" title="Toggle Sound">
+                <i id="audioToggleIcon" class="fa-solid fa-volume-xmark text-sm"></i>
+              </button>
+            </div>
+
+            <!-- Floating 100% Halal Badge -->
+            <div class="hidden sm:flex absolute -bottom-5 -left-5 items-center gap-3.5 px-5 py-4 rounded-2xl bg-card border border-border shadow-2xl">
+              <span class="font-heading text-3xl gold-text font-bold">100%</span>
+              <span class="text-xs leading-tight text-muted-foreground font-medium">Fresh, Halal &amp;<br>Handcrafted Daily</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- Menu Section (With REAL Food Dish Photos on Every Card!) -->
+    <section id="menu" class="py-14 sm:py-20 md:py-28 bg-secondary/50 border-t border-border/40">
+      <div class="container mx-auto px-4 sm:px-6">
+        <div class="text-center mb-10 sm:mb-14">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-3">
+            Pure Taste &amp; Quality
+          </div>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-heading font-bold mb-3 sm:mb-4">
+            <span class="gold-text">Our Delicious Menu</span>
+          </h2>
+          <p class="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+            Freshly prepared signature rolls, spicy tandoori momos, flavour-rich noodles, and chef special combos.
+          </p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10">
+          <button onclick="filterCategory('all', this)" class="menu-tab-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm font-semibold transition-all duration-300 bg-primary text-white shadow-lg shadow-primary/20">
+            <i class="fa-solid fa-border-all"></i> All Items
+          </button>
+          <button onclick="filterCategory('rolls', this)" class="menu-tab-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm font-semibold transition-all duration-300 bg-card text-foreground hover:bg-primary/10 border border-border">
+            <i class="fa-solid fa-drumstick-bite text-accent"></i> Signature Rolls
+          </button>
+          <button onclick="filterCategory('momos', this)" class="menu-tab-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm font-semibold transition-all duration-300 bg-card text-foreground hover:bg-primary/10 border border-border">
+            <i class="fa-solid fa-bowl-food text-accent"></i> Momos &amp; Chinese
+          </button>
+          <button onclick="filterCategory('main', this)" class="menu-tab-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm font-semibold transition-all duration-300 bg-card text-foreground hover:bg-primary/10 border border-border">
+            <i class="fa-solid fa-fire text-accent"></i> Main Course
+          </button>
+          <button onclick="filterCategory('noodles', this)" class="menu-tab-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm font-semibold transition-all duration-300 bg-card text-foreground hover:bg-primary/10 border border-border">
+            <i class="fa-solid fa-plate-wheat text-accent"></i> Rice &amp; Noodles
+          </button>
+          <button onclick="filterCategory('pasta', this)" class="menu-tab-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm font-semibold transition-all duration-300 bg-card text-foreground hover:bg-primary/10 border border-border">
+            <i class="fa-solid fa-cubes-stacked text-accent"></i> Pasta &amp; Combos
+          </button>
+          <button onclick="filterCategory('fries', this)" class="menu-tab-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm font-semibold transition-all duration-300 bg-card text-foreground hover:bg-primary/10 border border-border">
+            <i class="fa-solid fa-bacon text-accent"></i> Fries &amp; Maggie
+          </button>
+        </div>
+
+        <!-- Menu Grid with REAL Dish Photos (1Mysa Style Cards) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6" id="menuGrid">
+
+          <!-- 1: Chicken Roll -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="rolls">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="images/dishes/roll-chicken.jpg" alt="Chicken Roll" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30">Bestseller</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Chicken Roll</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Juicy marinated chicken chunks wrapped in hot flaky paratha with secret sauces &amp; fresh onions.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Single: <strong class="text-foreground text-sm">₹80</strong></span>
+                <span class="text-border">|</span>
+                <span class="text-xs text-muted-foreground">Double: <strong class="text-accent text-base font-bold">₹100</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Chicken%20Roll" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 2: Chicken Tikka Roll -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="rolls">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="images/dishes/roll-tandoori.jpg" alt="Chicken Tikka Roll" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-amber-400 backdrop-blur-md border border-amber-400/30"><i class="fa-solid fa-fire"></i> Smoky</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Chicken Tikka Roll</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Smoky charcoal-grilled chicken tikka with spiced mint chutney and pickled onions.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Single: <strong class="text-foreground text-sm">₹80</strong></span>
+                <span class="text-border">|</span>
+                <span class="text-xs text-muted-foreground">Double: <strong class="text-accent text-base font-bold">₹100</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Chicken%20Tikka%20Roll" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 3: Malai Tikka Roll -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="rolls">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="images/dishes/roll-tandoori.jpg" alt="Malai Tikka Roll" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30"><i class="fa-solid fa-crown"></i> Chef Special</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Malai Tikka Roll</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Tender chicken pieces coated in rich creamy malai sauce rolled in a crisp golden paratha.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Single: <strong class="text-foreground text-sm">₹80</strong></span>
+                <span class="text-border">|</span>
+                <span class="text-xs text-muted-foreground">Double: <strong class="text-accent text-base font-bold">₹100</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Malai%20Tikka%20Roll" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 4: Quick Eat Special Mix Roll -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="rolls">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="images/dishes/roll-chicken.jpg" alt="Quick Eat Special Mix Roll" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30"><i class="fa-solid fa-star"></i> Flagship</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Quick Eat Special Mix Roll</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Our signature loaded roll packed with spiced egg, hearty chicken &amp; house blend seasoning.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Single: <strong class="text-foreground text-sm">₹90</strong></span>
+                <span class="text-border">|</span>
+                <span class="text-xs text-muted-foreground">Double: <strong class="text-accent text-base font-bold">₹110</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Quick%20Eat%20Special%20Mix%20Roll" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 5: Paneer Roll -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="rolls">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="images/dishes/roll-paneer.jpg" alt="Paneer Roll" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-emerald-500/20 text-emerald-400 backdrop-blur-md border border-emerald-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-emerald-400 backdrop-blur-md border border-emerald-400/30">Veg Top Pick</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Paneer Roll</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Soft fresh paneer cubes sautéed in roasted tawa spices, bell peppers &amp; mint sauce.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Single: <strong class="text-foreground text-sm">₹70</strong></span>
+                <span class="text-border">|</span>
+                <span class="text-xs text-muted-foreground">Double: <strong class="text-accent text-base font-bold">₹80</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Paneer%20Roll" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 6: Tandoori Momos -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="momos">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="images/dishes/momos-tandoori.jpg" alt="Tandoori Momos" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30"><i class="fa-solid fa-fire"></i> Sizzling</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Tandoori Momos</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Smoked in charcoal tandoor and tossed in buttery spices, red marinade &amp; cream.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Half: <strong class="text-foreground text-sm">₹90</strong></span>
+                <span class="text-border">|</span>
+                <span class="text-xs text-muted-foreground">Full: <strong class="text-accent text-base font-bold">₹150</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Tandoori%20Momos" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 7: Kurkure Momos -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="momos">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="images/dishes/momos-kurkure.jpg" alt="Kurkure Momos" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30">Extra Crunchy</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Kurkure Momos</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Deep-fried with an extra-crispy crumb crust, served with fiery spicy chutney.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Half: <strong class="text-foreground text-sm">₹120</strong></span>
+                <span class="text-border">|</span>
+                <span class="text-xs text-muted-foreground">Full: <strong class="text-accent text-base font-bold">₹200</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Kurkure%20Momos" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 8: Steamed Momos -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="momos">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="images/dishes/momos-steam.jpg" alt="Steamed Momos" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30">Classic</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Steamed Chicken Momos</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Delicate thin-wrapper steamed dumplings loaded with juicy seasoned minced chicken.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Half: <strong class="text-foreground text-sm">₹70</strong></span>
+                <span class="text-border">|</span>
+                <span class="text-xs text-muted-foreground">Full: <strong class="text-accent text-base font-bold">₹120</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Steamed%20Chicken%20Momos" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 9: Tandoori Chicken -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="main">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600&auto=format&fit=crop&q=80" alt="Tandoori Chicken" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30"><i class="fa-solid fa-crown"></i> Signature</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Tandoori Chicken</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Whole roasted chicken marinated in spiced yogurt and grilled to perfection over embers.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Half: <strong class="text-foreground text-sm">₹240</strong></span>
+                <span class="text-border">|</span>
+                <span class="text-xs text-muted-foreground">Full: <strong class="text-accent text-base font-bold">₹450</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Tandoori%20Chicken" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 10: Butter Chicken -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="main">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600&auto=format&fit=crop&q=80" alt="Butter Chicken" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30">Rich Gravy</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Butter Chicken</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Tender roasted chicken simmering in velvety, mildly spiced makhani tomato butter gravy.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Half: <strong class="text-foreground text-sm">₹250</strong></span>
+                <span class="text-border">|</span>
+                <span class="text-xs text-muted-foreground">Full: <strong class="text-accent text-base font-bold">₹480</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Butter%20Chicken" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 11: Chicken Hakka Noodles -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="noodles">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600&auto=format&fit=crop&q=80" alt="Chicken Hakka Noodles" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30">Wok Tossed</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Chicken Hakka Noodles</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Thin wheat noodles stir-fried with shredded chicken, crunchy carrots, cabbage and spring onions.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Half: <strong class="text-foreground text-sm">₹110</strong></span>
+                <span class="text-border">|</span>
+                <span class="text-xs text-muted-foreground">Full: <strong class="text-accent text-base font-bold">₹180</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Chicken%20Hakka%20Noodles" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 12: Combo 1 (Popcorn + Fries + Cold Drink) -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="pasta">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="images/dishes/combo-popcorn-fries.jpg" alt="Popcorn Fries Combo" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30"><i class="fa-solid fa-crown"></i> Best Value</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Combo 1: Popcorn + Fries + Cold Drink</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Golden crispy chicken popcorn served with salted french fries and a chilled cold drink.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Special Combo: <strong class="text-accent text-base font-bold">₹200</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Combo%201%20Popcorn%20Fries%20Coldrink" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 13: Peri Peri Fries -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="fries">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="images/dishes/fries-periperi.jpg" alt="Peri Peri Fries" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-emerald-500/20 text-emerald-400 backdrop-blur-md border border-emerald-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30">Spicy</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Peri Peri Fries</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Golden french fries tossed generously in zesty hot peri peri spice mix.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Price: <strong class="text-accent text-base font-bold">₹80</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Peri%20Peri%20Fries" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 14: Cheesy Fries -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="fries">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="images/dishes/fries-cheese.jpg" alt="Cheesy Fries" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-emerald-500/20 text-emerald-400 backdrop-blur-md border border-emerald-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30">Loaded</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Cheesy French Fries</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Golden deep-fried potato batons smothered in warm creamy melted cheese sauce.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Price: <strong class="text-accent text-base font-bold">₹130</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Cheesy%20Fries" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+          <!-- 15: Chicken Maggie -->
+          <div class="menu-item-card group relative bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-[0_8px_30px_rgba(230,40,40,0.18)] transition-all duration-400 hover:-translate-y-1 flex flex-col justify-between" data-cat="fries">
+            <div>
+              <div class="relative h-44 sm:h-52 overflow-hidden bg-secondary">
+                <img src="https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600&auto=format&fit=crop&q=80" alt="Chicken Maggie" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-3 flex gap-2 z-10">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-red-500/20 text-red-400 backdrop-blur-md border border-red-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Non-Veg
+                  </span>
+                  <span class="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase bg-black/50 text-accent backdrop-blur-md border border-accent/30">Comfort Food</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-lg sm:text-xl font-heading font-bold text-foreground mb-1 group-hover:text-primary transition-colors">Chicken Maggie</h3>
+                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">Iconic comfort Maggie noodles cooked with shredded chicken and fragrant house seasonings.</p>
+              </div>
+            </div>
+            <div class="px-5 py-3.5 bg-secondary/40 border-t border-border flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-muted-foreground">Price: <strong class="text-accent text-base font-bold">₹140</strong></span>
+              </div>
+              <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order%20Chicken%20Maggie" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp"></i> Order
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Official Menu Cards Gallery Section (Original Printed Cards Kept Here!) -->
+    <section id="cards" class="py-16 sm:py-20 md:py-28 bg-background border-t border-border/40">
+      <div class="container mx-auto px-4 sm:px-6">
+        <div class="text-center mb-10 sm:mb-14">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-bold uppercase tracking-widest mb-3">
+            Original Printed Catalog
+          </div>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-heading font-bold mb-3 sm:mb-4">
+            <span class="gold-text">Official Printed Menu Cards</span>
+          </h2>
+          <p class="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+            Click on any menu page below to view full items, variations, half &amp; full portions, and prices in crystal clear resolution.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-5">
+          <div onclick="openMenuModal('images/menu-cover.jpg')" class="group cursor-pointer rounded-2xl overflow-hidden border border-border bg-card shadow-sm hover:shadow-[0_8px_30px_rgba(229,184,74,0.2)] transition-all hover:-translate-y-1">
+            <div class="aspect-[3/4] overflow-hidden relative">
+              <img src="images/menu-cover.jpg" alt="Quick Eat Menu Cover" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-sm font-semibold">
+                <i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Zoom
+              </div>
+            </div>
+            <div class="p-2.5 text-center">
+              <span class="text-xs font-bold text-foreground">Menu Cover</span>
+            </div>
+          </div>
+
+          <div onclick="openMenuModal('images/menu-rolls.jpg')" class="group cursor-pointer rounded-2xl overflow-hidden border border-border bg-card shadow-sm hover:shadow-[0_8px_30px_rgba(229,184,74,0.2)] transition-all hover:-translate-y-1">
+            <div class="aspect-[3/4] overflow-hidden relative">
+              <img src="images/menu-rolls.jpg" alt="Quick Eat Rolls Menu" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-sm font-semibold">
+                <i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Zoom
+              </div>
+            </div>
+            <div class="p-2.5 text-center">
+              <span class="text-xs font-bold text-foreground">Rolls Menu</span>
+            </div>
+          </div>
+
+          <div onclick="openMenuModal('images/menu-main-course-fries.jpg')" class="group cursor-pointer rounded-2xl overflow-hidden border border-border bg-card shadow-sm hover:shadow-[0_8px_30px_rgba(229,184,74,0.2)] transition-all hover:-translate-y-1">
+            <div class="aspect-[3/4] overflow-hidden relative">
+              <img src="images/menu-main-course-fries.jpg" alt="Quick Eat Main Course & Fries" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-sm font-semibold">
+                <i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Zoom
+              </div>
+            </div>
+            <div class="p-2.5 text-center">
+              <span class="text-xs font-bold text-foreground">Main Course &amp; Fries</span>
+            </div>
+          </div>
+
+          <div onclick="openMenuModal('images/menu-chinese-momos.jpg')" class="group cursor-pointer rounded-2xl overflow-hidden border border-border bg-card shadow-sm hover:shadow-[0_8px_30px_rgba(229,184,74,0.2)] transition-all hover:-translate-y-1">
+            <div class="aspect-[3/4] overflow-hidden relative">
+              <img src="images/menu-chinese-momos.jpg" alt="Quick Eat Momos & Starters" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-sm font-semibold">
+                <i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Zoom
+              </div>
+            </div>
+            <div class="p-2.5 text-center">
+              <span class="text-xs font-bold text-foreground">Momos &amp; Chinese</span>
+            </div>
+          </div>
+
+          <div onclick="openMenuModal('images/menu-noodles-maggie.jpg')" class="group cursor-pointer rounded-2xl overflow-hidden border border-border bg-card shadow-sm hover:shadow-[0_8px_30px_rgba(229,184,74,0.2)] transition-all hover:-translate-y-1">
+            <div class="aspect-[3/4] overflow-hidden relative">
+              <img src="images/menu-noodles-maggie.jpg" alt="Quick Eat Noodles & Maggie" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-sm font-semibold">
+                <i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Zoom
+              </div>
+            </div>
+            <div class="p-2.5 text-center">
+              <span class="text-xs font-bold text-foreground">Noodles &amp; Maggie</span>
+            </div>
+          </div>
+
+          <div onclick="openMenuModal('images/menu-pasta-combos.jpg')" class="group cursor-pointer rounded-2xl overflow-hidden border border-border bg-card shadow-sm hover:shadow-[0_8px_30px_rgba(229,184,74,0.2)] transition-all hover:-translate-y-1">
+            <div class="aspect-[3/4] overflow-hidden relative">
+              <img src="images/menu-pasta-combos.jpg" alt="Quick Eat Pasta & Combos" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-sm font-semibold">
+                <i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Zoom
+              </div>
+            </div>
+            <div class="p-2.5 text-center">
+              <span class="text-xs font-bold text-foreground">Pasta &amp; Combos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section id="story" class="py-16 sm:py-20 md:py-28 bg-secondary/40 border-t border-border/40">
+      <div class="container mx-auto px-5 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-3">
+              About Quick Eat
+            </div>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-heading text-foreground leading-[1.1] mb-6">
+              Serving Zakir Nagar's <span class="gold-text">Most Loved Fast Food</span>
+            </h2>
+            <p class="text-base sm:text-lg text-muted-foreground mb-6 leading-relaxed">
+              Located right on Zakir Nagar Main Road, Quick Eat Café was created with a simple mission: to serve rich, flavorful, and generously stuffed rolls and Chinese bites without burning a hole in your pocket.
+            </p>
+            <p class="text-base sm:text-lg text-muted-foreground mb-8 leading-relaxed">
+              Whether you are an engineering student at Jamia, a local foodie, or coming across Delhi for our midnight food scene, every bite is cooked to perfection with authentic hygiene and halal standards.
+            </p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 pt-6 border-t border-border">
+              <div>
+                <span class="font-heading text-3xl sm:text-4xl text-primary font-bold block">10,000+</span>
+                <span class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Rolls Rolled</span>
+              </div>
+              <div>
+                <span class="font-heading text-3xl sm:text-4xl gold-text font-bold block">25+</span>
+                <span class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Menu Varieties</span>
+              </div>
+              <div>
+                <span class="font-heading text-3xl sm:text-4xl text-foreground font-bold block">4.8★</span>
+                <span class="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Average Rating</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="rounded-3xl overflow-hidden border border-border shadow-2xl">
+              <img src="images/reel-thumb.jpg" alt="Quick Eat Cafe Ambiance" class="w-full h-[450px] object-cover">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-16 sm:py-20 md:py-28 bg-background border-t border-border/40">
+      <div class="container mx-auto px-4 sm:px-6">
+        <div class="text-center mb-10 sm:mb-14">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-bold uppercase tracking-widest mb-3">
+            Real Foodie Reviews
+          </div>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-heading font-bold mb-3 sm:mb-4">
+            <span class="gold-text">What Our Guests Say</span>
+          </h2>
+          <p class="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+            See why students and families across Zakir Nagar, Jamia, and Okhla rate us as their top street-food hangout.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-6 sm:p-8 rounded-2xl bg-card border border-border shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex text-amber-400 text-sm mb-4">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+              <p class="text-foreground text-sm sm:text-base leading-relaxed mb-6">
+                "The Chicken Tikka Roll and Special Mix Roll are insanely good! The paratha is super crispy and the chicken is generously stuffed. Easily the best roll in Zakir Nagar!"
+              </p>
+            </div>
+            <div class="flex items-center gap-3 pt-4 border-t border-border/60">
+              <div class="w-10 h-10 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center text-sm">ZA</div>
+              <div>
+                <strong class="text-foreground text-sm block">Zaid Ansari</strong>
+                <span class="text-xs text-muted-foreground">Local Food Guide</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-8 rounded-2xl bg-card border border-border shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex text-amber-400 text-sm mb-4">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+              <p class="text-foreground text-sm sm:text-base leading-relaxed mb-6">
+                "Their Kurkure Momos and Tandoori Momos are unbeatable. Super crunchy on the outside and juicy inside. We order almost every weekend via WhatsApp and delivery is very fast."
+              </p>
+            </div>
+            <div class="flex items-center gap-3 pt-4 border-t border-border/60">
+              <div class="w-10 h-10 rounded-full bg-accent/20 text-accent font-bold flex items-center justify-center text-sm">MS</div>
+              <div>
+                <strong class="text-foreground text-sm block">Mohammad Shahzad</strong>
+                <span class="text-xs text-muted-foreground">Jamia Nagar Resident</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-8 rounded-2xl bg-card border border-border shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex text-amber-400 text-sm mb-4">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+              <p class="text-foreground text-sm sm:text-base leading-relaxed mb-6">
+                "Value for money 10/10. The Popcorn + Fries combo for ₹200 is my go-to evening snack. Great customer dealing and authentic flavors!"
+              </p>
+            </div>
+            <div class="flex items-center gap-3 pt-4 border-t border-border/60">
+              <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-sm">FA</div>
+              <div>
+                <strong class="text-foreground text-sm block">Farhan Akhtar</strong>
+                <span class="text-xs text-muted-foreground">Verified Zomato Customer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visit Us & Location Section -->
+    <section id="contact" class="py-16 sm:py-20 md:py-28 bg-secondary/50 border-t border-border/40">
+      <div class="container mx-auto px-4 sm:px-6">
+        <div class="text-center mb-10 sm:mb-14">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-3">
+            Come Visit Us
+          </div>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-heading font-bold mb-3 sm:mb-4">
+            <span class="gold-text">Visit &amp; Contact</span>
+          </h2>
+          <p class="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+            Located conveniently on Zakir Nagar Main Road, Okhla. Open all 7 days for dine-in, takeaway and doorstep delivery.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <div class="p-6 sm:p-8 rounded-2xl bg-card border border-border shadow-sm flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-xl shrink-0">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-lg text-foreground mb-1">Outlet Address</h3>
+              <p class="text-sm text-muted-foreground leading-relaxed">
+                Shop 142, Ground Floor, Zakir Nagar Main Road, Jogabai Extension, Okhla, New Delhi - 110025
+              </p>
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-8 rounded-2xl bg-card border border-border shadow-sm flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl shrink-0">
+              <i class="fa-solid fa-phone-volume"></i>
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-lg text-foreground mb-1">Call for Orders</h3>
+              <p class="text-sm text-foreground font-semibold">+91 75037 53074</p>
+              <p class="text-xs text-muted-foreground mt-1">Direct calls for takeaway &amp; doorstep delivery.</p>
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-8 rounded-2xl bg-card border border-border shadow-sm flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl shrink-0">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-lg text-foreground mb-1">Opening Hours</h3>
+              <p class="text-sm text-foreground font-semibold">1:00 PM – 11:00 PM</p>
+              <p class="text-xs text-muted-foreground mt-1">Open all 7 days a week.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Google Map Container -->
+        <div class="rounded-3xl overflow-hidden border border-border shadow-2xl h-96 relative">
+          <iframe 
+            src="https://maps.google.com/maps?q=Quick+Eat+Zakir+Nagar+Main+Road+Okhla+New+Delhi&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+            width="100%" 
+            height="100%" 
+            style="border:0; filter: invert(90%) hue-rotate(180deg) contrast(110%);" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade" 
+            title="Quick Eat Café Map">
+          </iframe>
+          <div class="absolute bottom-4 right-4">
+            <a href="https://www.google.com/maps/search/Quick+Eat+Zakir+Nagar+Okhla+New+Delhi" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-full bg-card/90 border border-border text-foreground hover:bg-secondary text-xs font-semibold shadow-lg backdrop-blur-md flex items-center gap-2">
+              <i class="fa-solid fa-diamond-turn-right text-accent"></i> Open in Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-card border-t border-border py-12 sm:py-16">
+      <div class="container mx-auto px-4 sm:px-6 text-center">
+        <a href="#" class="inline-flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-full border border-accent/40 bg-accent/10 flex items-center justify-center text-accent">
+            <i class="fa-solid fa-crown text-sm"></i>
+          </div>
+          <span class="text-xl font-heading font-bold text-foreground">
+            QUICK EAT <span class="font-script text-accent text-2xl lowercase">café</span>
+          </span>
+        </a>
+        <p class="text-sm text-muted-foreground max-w-md mx-auto mb-6">
+          Zakir Nagar's hub for authentic loaded rolls, spicy momos, Indo-Chinese and savory fast-food delights.
+        </p>
+
+        <div class="flex justify-center gap-4 mb-8">
+          <a href="https://instagram.com/Quick.Eat" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-secondary border border-border flex items-center justify-center text-accent hover:bg-accent hover:text-black transition-all">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://wa.me/917503753074" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-secondary border border-border flex items-center justify-center text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+          <a href="tel:+917503753074" class="w-10 h-10 rounded-full bg-secondary border border-border flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all">
+            <i class="fa-solid fa-phone"></i>
+          </a>
+        </div>
+
+        <div class="text-xs text-muted-foreground pt-6 border-t border-border/40">
+          &copy; 2026 Quick Eat Café. All Rights Reserved. • Shop 142, Zakir Nagar Main Road, Okhla, New Delhi - 110025.
+        </div>
+      </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="fixed bottom-6 right-6 z-40">
+      <a href="https://wa.me/917503753074?text=Hi%20Quick%20Eat%2C%20I%20would%20like%20to%20order" target="_blank" rel="noopener noreferrer" class="w-14 h-14 rounded-full bg-[#25d366] text-white flex items-center justify-center text-2xl shadow-[0_10px_25px_rgba(37,211,102,0.5)] hover:scale-110 transition-transform" title="Order on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+      </a>
+    </div>
+
+    <!-- Modal for Menu Zoom -->
+    <div id="menuModal" class="menu-modal" onclick="closeMenuModal()">
+      <div class="relative max-w-4xl max-h-[90vh]" onclick="event.stopPropagation()">
+        <button onclick="closeMenuModal()" class="absolute -top-10 right-0 text-white text-3xl font-bold hover:text-primary">&times;</button>
+        <img id="modalImg" src="" alt="Menu Zoom" class="max-w-full max-h-[85vh] rounded-2xl border border-border shadow-2xl">
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Audio Toggle for Video
+    function toggleReelAudio(e) {
+      if (e) e.stopPropagation();
+      const vid = document.getElementById('heroReelVideo');
+      const icon = document.getElementById('audioToggleIcon');
+      if (vid) {
+        vid.muted = !vid.muted;
+        if (vid.muted) {
+          icon.className = 'fa-solid fa-volume-xmark text-sm';
+        } else {
+          icon.className = 'fa-solid fa-volume-high text-sm text-accent';
+          vid.play();
+        }
+      }
+    }
+
+    // Category Filtering
+    function filterCategory(cat, btn) {
+      document.querySelectorAll('.menu-tab-btn').forEach(b => {
+        b.className = 'menu-tab-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm font-semibold transition-all duration-300 bg-card text-foreground hover:bg-primary/10 border border-border';
+      });
+      btn.className = 'menu-tab-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm font-semibold transition-all duration-300 bg-primary text-white shadow-lg shadow-primary/20';
+
+      const items = document.querySelectorAll('.menu-item-card');
+      items.forEach(card => {
+        if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Modal Zoom
+    function openMenuModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('menuModal').classList.add('active');
+    }
+
+    function closeMenuModal() {
+      document.getElementById('menuModal').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenuModal();
+    });
+  </script>
+</body>
+</html>
+`;
+
+fs.writeFileSync('index.html', htmlContent, 'utf8');
+console.log('Successfully updated index.html with real dish photos and pure video hero!');
