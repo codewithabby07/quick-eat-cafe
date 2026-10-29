@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth dark">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,14 +42,32 @@
 
   <style>
     :root {
-      --background: 224 20% 8%;
-      --foreground: 220 14% 96%;
-      --card: 224 18% 11%;
-      --card-foreground: 220 14% 96%;
-      --primary: 0 78% 53%;
+      /* Light Theme */
+      --background: 0 0% 100%;
+      --foreground: 224 30% 12%;
+      --card: 0 0% 100%;
+      --card-foreground: 224 30% 12%;
+      --primary: 354 84% 48%;
       --primary-foreground: 0 0% 100%;
-      --secondary: 224 14% 15%;
-      --secondary-foreground: 220 14% 96%;
+      --secondary: 40 20% 98%;
+      --secondary-foreground: 224 30% 12%;
+      --muted: 220 14% 96%;
+      --muted-foreground: 220 10% 46%;
+      --accent: 38 92% 50%;
+      --accent-foreground: 0 0% 100%;
+      --border: 220 13% 90%;
+    }
+
+    .dark {
+      /* Dark Theme */
+      --background: 224 18% 7%;
+      --foreground: 0 0% 98%;
+      --card: 224 16% 10%;
+      --card-foreground: 0 0% 98%;
+      --primary: 0 78% 54%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 224 14% 14%;
+      --secondary-foreground: 45 75% 55%;
       --muted: 224 10% 18%;
       --muted-foreground: 220 10% 65%;
       --accent: 45 75% 52%;
@@ -62,6 +80,7 @@
       background-color: hsl(var(--background));
       color: hsl(var(--foreground));
       overflow-x: hidden;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     .font-heading {
@@ -72,14 +91,25 @@
       font-family: 'Great Vibes', cursive;
     }
 
+    /* Gradients */
     .gold-text {
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 55%, #881337 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .dark .gold-text {
       background: linear-gradient(135deg, #ffe785 0%, #ffd83d 30%, #e5b84a 70%, #b8861e 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .red-gradient {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+      box-shadow: 0 8px 24px -4px rgba(220, 38, 38, 0.25);
+    }
+    .dark .red-gradient {
       background: linear-gradient(135deg, #ff3b3b 0%, #e62828 60%, #b31414 100%);
+      box-shadow: 0 8px 24px -4px rgba(230, 40, 40, 0.4);
     }
 
     /* Modal for Menu Zoom */
@@ -99,7 +129,7 @@
     }
   </style>
 </head>
-<body class="dark selection:bg-primary selection:text-primary-foreground min-h-screen flex flex-col justify-between">
+<body class="selection:bg-primary selection:text-white bg-background text-foreground min-h-screen flex flex-col justify-between">
 
   <!-- Navbar -->
   <header class="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50">
@@ -116,7 +146,10 @@
         </a>
 
         <!-- Actions -->
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button type="button" onclick="toggleTheme()" class="theme-toggle-btn flex items-center justify-center w-10 h-10 rounded-xl border border-border bg-card hover:bg-secondary text-foreground active:scale-95 shadow-sm transition-all cursor-pointer p-2 shrink-0" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+            <i class="theme-icon fa-solid fa-moon text-sm text-accent"></i>
+          </button>
           <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary hover:bg-secondary/80 border border-border text-foreground text-xs sm:text-sm font-semibold transition-all">
             <i class="fa-solid fa-arrow-left text-accent text-xs"></i>
             <span>Back to Home</span>
@@ -591,10 +624,39 @@
       <a href="https://api.whatsapp.com/send?phone=917503753074&text=Hi%20Quick%20Eat%2C%20I%20want%20to%20order" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-full red-gradient text-white text-xs font-bold shadow-md">
         <i class="fa-brands fa-whatsapp text-sm"></i> Order via WhatsApp
       </a>
+      <div class="mt-6 pt-4 border-t border-border/40 text-muted-foreground">
+        Made by and Managed by <a href="https://codewithabby-portfolio.vercel.app/digital-qr-menus" target="_blank" rel="noopener noreferrer" class="font-semibold text-primary hover:underline hover:opacity-90 transition-all">CodeWithAbby</a>
+      </div>
     </div>
   </footer>
 
   <script>
+    // Live Theme Switcher (Option 1: Toggle between White & Charcoal Dark Theme)
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      try { localStorage.setItem('quick_eat_theme', isDark ? 'dark' : 'light'); } catch (err) {}
+      updateThemeUI(isDark);
+    }
+
+    function updateThemeUI(isDark) {
+      document.querySelectorAll('.theme-icon').forEach(icon => {
+        icon.className = isDark ? 'theme-icon fa-solid fa-sun text-sm text-amber-400' : 'theme-icon fa-solid fa-moon text-sm text-accent';
+      });
+    }
+
+    // Auto-restore saved theme on load (defaults to Light mode)
+    (function () {
+      let saved = null;
+      try { saved = localStorage.getItem('quick_eat_theme'); } catch (err) {}
+      const isDark = saved === 'dark';
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      window.addEventListener('DOMContentLoaded', () => updateThemeUI(isDark));
+    })();
+
     function filterMenu(cat, btn) {
       document.querySelectorAll('.menu-pill').forEach(b => {
         b.className = 'menu-pill flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-card text-foreground hover:bg-secondary border border-border';
